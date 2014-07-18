@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFK", "AFK\AFK.csproj", "{B4508ACE-5103-4B55-A888-69DB2312BFEE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4508ACE-5103-4B55-A888-69DB2312BFEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4508ACE-5103-4B55-A888-69DB2312BFEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4508ACE-5103-4B55-A888-69DB2312BFEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4508ACE-5103-4B55-A888-69DB2312BFEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

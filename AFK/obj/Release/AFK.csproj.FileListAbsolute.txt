@@ -1,0 +1,7 @@
+F:\Plugins\AFK\AFK\bin\Release\AFK.dll
+F:\Plugins\AFK\AFK\bin\Release\AFK.pdb
+F:\Plugins\AFK\AFK\bin\Release\Newtonsoft.Json.dll
+F:\Plugins\AFK\AFK\bin\Release\TerrariaServer.exe
+F:\Plugins\AFK\AFK\bin\Release\TShockAPI.dll
+F:\Plugins\AFK\AFK\obj\Release\AFK.dll
+F:\Plugins\AFK\AFK\obj\Release\AFK.pdb
