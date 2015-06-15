@@ -12,8 +12,8 @@ using System.ComponentModel;
 
 namespace AFK
 {
-    [ApiVersion(1, 16)]
-    public class Jail : TerrariaPlugin
+    [ApiVersion(1, 17)]
+    public class AFK : TerrariaPlugin
     {
         public static AFKConfigFile AFKConfig { get; set; }
         public Player[] Players { get; set; }
@@ -25,7 +25,7 @@ namespace AFK
         }
         public override string Author
         {
-            get { return "Created by DarkunderdoG"; }
+            get { return "DarkunderdoG"; }
         }
         public override string Description
         {
@@ -59,7 +59,7 @@ namespace AFK
             base.Dispose(disposing);
         }
 
-        public Jail(Main game)
+        public AFK(Main game)
             : base(game)
         {
             Order = 50;
@@ -76,7 +76,7 @@ namespace AFK
             {
                 Commands.ChatCommands.Add(new Command("afk.comm", AFKcomm, "afktime"));
                 Commands.ChatCommands.Add(new Command("afk.comm", sendafk, "afk"));
-                Commands.ChatCommands.Add(new Command("afk.comm", sendback, "back"));
+                Commands.ChatCommands.Add(new Command("afk.comm", sendback, "return"));
                 Commands.ChatCommands.Add(new Command("afk.cfg", setwarptime, "afkwarptime"));
             }
             if (AFKConfig.afkkick)
@@ -126,10 +126,11 @@ namespace AFK
             catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Error in jail config file");
+                Console.WriteLine("Error in AFK config file");
                 Console.ForegroundColor = ConsoleColor.Gray;
-                Log.Error("Jail Config Exception");
-                Log.Error(ex.ToString());
+
+                TShock.Log.ConsoleError("AFK Config Exception");
+                TShock.Log.ConsoleError(ex.ToString());
             }
         }
 
@@ -338,7 +339,7 @@ namespace AFK
         private void AFKreload(CommandArgs args)
         {
             SetupConfig();
-            Log.Info("AFK Reload Initiated");
+            TShock.Log.ConsoleInfo("AFK Reload Initiated");
             args.Player.SendMessage("AFK Reload Initiated", Color.Green);
         }
 
