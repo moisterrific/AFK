@@ -156,7 +156,7 @@ namespace AFK
 
                                 if (AFKConfig.afkkick && !player.TSPlayer.Group.HasPermission("afk.nokick"))
                                 {
-                                    if ((player.TSPlayer.TileX == player.lasttileX && player.TSPlayer.TileY == player.lasttileY) || (player.TSPlayer.TileX == (int)afkwarp.Position.X && player.TSPlayer.TileY == (int)afkwarp.Position.Y))
+                                    if ((player.TSPlayer.TileX == player.lasttileX && player.TSPlayer.TileY == player.lasttileY) || (afkwarp != null) && (player.TSPlayer.TileX == (int)afkwarp.Position.X && player.TSPlayer.TileY == (int)afkwarp.Position.Y))
                                         player.afkkick++;
                                     else
                                         player.afkkick = 0;
@@ -187,9 +187,21 @@ namespace AFK
                                             player.backtileX = player.TSPlayer.TileX;
                                             player.backtileY = player.TSPlayer.TileY;
                                             player.afk = 0;
+
+                                            if (afkwarp == null)
+                                            {
+                                                TShock.Utils.Kick(player.TSPlayer, "for being AFK.", true, false, "Server");
+                                                TShock.Log.ConsoleError("AFK Plugin: Warp \"afk\" is not defined.");
+                                                return;
+                                            }
+                                            if (TShock.Regions.GetRegionByName("afk") == null)
+                                            {
+                                                TShock.Log.ConsoleError("AFK Plugin: Region \"afk\" is not defined");
+                                            }
+                                            
                                             if (player.TSPlayer.Teleport((int)afkwarp.Position.X * 16, (int)(afkwarp.Position.Y) * 16))
                                             {
-                                                player.TSPlayer.SendMessage("You have been warped to the AFK zone. Use the /back command to go back!", Color.Red);
+                                                player.TSPlayer.SendMessage("You have been warped to the AFK zone. Use the /return command to go back!", Color.Red);
                                                 TShock.Utils.Broadcast(player.TSPlayer.Name + " is away from his/her keyboard and has been warped To The AFK Zone!", Color.Yellow);
                                             }
                                         }
@@ -197,14 +209,17 @@ namespace AFK
 
                                     if (!currentregionlist.Contains("afk") && player.afk > 0 && (player.TSPlayer.TileX == player.lasttileX && player.TSPlayer.TileY == player.lasttileY))
                                     {
-                                        if (player.backtileX != 0)
+                                        if (TShock.Regions.GetRegionByName("afk") != null) //checks if afk region exists
                                         {
-                                            if (player.TSPlayer.Teleport(player.backtileX * 16, player.backtileY * 16))
+                                            if (player.backtileX != 0)
                                             {
-                                                player.TSPlayer.SendMessage("You have been warped back to where you were", Color.Green);
-                                                TShock.Utils.Broadcast(player.TSPlayer.Name + " is back from AFK! YAY!!!", Color.Yellow);
-                                                player.backtileX = 0;
-                                                player.backtileY = 0;
+                                                if (player.TSPlayer.Teleport(player.backtileX * 16, player.backtileY * 16))
+                                                {
+                                                    player.TSPlayer.SendMessage("You have been warped back to where you were", Color.Green);
+                                                    TShock.Utils.Broadcast(player.TSPlayer.Name + " is back from AFK! YAY!!!", Color.Yellow);
+                                                    player.backtileX = 0;
+                                                    player.backtileY = 0;
+                                                }
                                             }
                                         }
                                     }
@@ -241,7 +256,7 @@ namespace AFK
                         return;
                     }
 
-                    else if ((cmd != "/afk" && cmd != "/back") && AFKPly.backtileX != 0 && AFKConfig.afkwarp)
+                    else if ((cmd != "/afk" && cmd != "/return") && AFKPly.backtileX != 0 && AFKConfig.afkwarp)
                     {
                         if (AFKPly.TSPlayer.Teleport(AFKPly.backtileX * 16, AFKPly.backtileY * 16))
                         {
@@ -276,6 +291,12 @@ namespace AFK
             }
 
             var warp = TShock.Warps.Find("afk");
+            if (warp == null)
+            {
+                args.Player.SendErrorMessage("Unable to send you to AFK. Warp \"afk\" is not defined");
+                TShock.Log.ConsoleError("AFK Plugin: Warp \"afk\" is not defined");
+                return;
+            }
 
             string currentregionlist = "";
             var currentregion = TShock.Regions.InAreaRegionName(AFKPly.TSPlayer.TileX, AFKPly.TSPlayer.TileY);
@@ -288,7 +309,7 @@ namespace AFK
                 AFKPly.afk = 0;
                 if (args.Player.Teleport((int)warp.Position.X * 16, (int)warp.Position.Y * 16))
                 {
-                    args.Player.SendMessage("You have been warped to the AFK zone. Use the /back command to go back!", Color.Red);
+                    args.Player.SendMessage("You have been warped to the AFK zone. Use the /return command to go back!", Color.Red);
                     TShock.Utils.Broadcast(args.Player.Name + " is away from his/her keyboard and has been warped to the AFK zone!", Color.Yellow);
                     AFKPly.afkspam = AFKConfig.afkspam;
                 }
@@ -318,7 +339,7 @@ namespace AFK
         {
             if (args.Parameters.Count < 1)
             {
-                args.Player.SendMessage("Invalid syntax! Proper syntax: /setafktime <time>", Color.Red);
+                args.Player.SendMessage("Invalid syntax! Proper syntax: /afkwarptime <time>", Color.Red);
                 return;
             }
             AFKConfig.afkwarptime = int.Parse(args.Parameters[0]);
@@ -329,7 +350,7 @@ namespace AFK
         {
             if (args.Parameters.Count < 1)
             {
-                args.Player.SendMessage("Invalid syntax! Proper syntax: /setafktime <time>", Color.Red);
+                args.Player.SendMessage("Invalid syntax! Proper syntax: /afkkicktime <time>", Color.Red);
                 return;
             }
             AFKConfig.afkwarptime = int.Parse(args.Parameters[0]);
