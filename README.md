@@ -1,4 +1,4 @@
-Just update to new API, all rights are reserved by the original developer [DarkunderdoG].
+Original plugin developed by DarkunderdoG
 
 Developer: http://tshock.co/xf/index.php?members/darkunderdog.5/
 
