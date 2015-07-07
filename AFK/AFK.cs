@@ -12,7 +12,7 @@ using System.ComponentModel;
 
 namespace AFK
 {
-    [ApiVersion(1, 17)]
+    [ApiVersion(1, 18)]
     public class AFK : TerrariaPlugin
     {
         public static AFKConfigFile AFKConfig { get; set; }
@@ -162,7 +162,7 @@ namespace AFK
                                         player.afkkick = 0;
 
                                     if (player.afkkick == Math.Round(AFKConfig.afkkicktime * .70) || player.afkkick == Math.Round(AFKConfig.afkkicktime * .80) || player.afkkick == Math.Round(AFKConfig.afkkicktime * .90))
-                                        player.TSPlayer.SendMessage("You will be kicked when you're AFK for " + AFKConfig.afkkicktime + "secs. You have been AFK for " + player.afkkick + " secs.", Color.Red);
+                                        player.TSPlayer.SendErrorMessage("You will be kicked when you're AFK for " + AFKConfig.afkkicktime + "secs. You have been AFK for " + player.afkkick + " secs.");
                                     else if (player.afkkick >= AFKConfig.afkkicktime)
                                     {
                                         TShock.Utils.Kick(player.TSPlayer, "for being AFK for " + player.afkkick + " seconds.", true, false, "Server");
@@ -201,7 +201,7 @@ namespace AFK
                                             
                                             if (player.TSPlayer.Teleport((int)afkwarp.Position.X * 16, (int)(afkwarp.Position.Y) * 16))
                                             {
-                                                player.TSPlayer.SendMessage("You have been warped to the AFK zone. Use the /return command to go back!", Color.Red);
+                                                player.TSPlayer.SendErrorMessage("You have been warped to the AFK zone. Use the /return command to go back!");
                                                 TShock.Utils.Broadcast(player.TSPlayer.Name + " is away from his/her keyboard and has been warped To The AFK Zone!", Color.Yellow);
                                             }
                                         }
@@ -215,7 +215,7 @@ namespace AFK
                                             {
                                                 if (player.TSPlayer.Teleport(player.backtileX * 16, player.backtileY * 16))
                                                 {
-                                                    player.TSPlayer.SendMessage("You have been warped back to where you were", Color.Green);
+                                                    player.TSPlayer.SendSuccessMessage("You have been warped back to where you were");
                                                     TShock.Utils.Broadcast(player.TSPlayer.Name + " is back from AFK! YAY!!!", Color.Yellow);
                                                     player.backtileX = 0;
                                                     player.backtileY = 0;
@@ -260,7 +260,7 @@ namespace AFK
                     {
                         if (AFKPly.TSPlayer.Teleport(AFKPly.backtileX * 16, AFKPly.backtileY * 16))
                         {
-                            AFKPly.TSPlayer.SendMessage("You have been warped back to where you were", Color.Green);
+                            AFKPly.TSPlayer.SendSuccessMessage("You have been warped back to where you were!");
                             TShock.Utils.Broadcast(AFKPly.TSPlayer.Name + " is back from AFK! YAY!!!", Color.Yellow);
                             AFKPly.backtileX = 0;
                             AFKPly.backtileY = 0;
@@ -276,8 +276,8 @@ namespace AFK
         private void AFKcomm(CommandArgs args)
         {
             var AFKPly = Players[args.Player.Index];
-            TShock.Players[args.Player.Index].SendMessage("You have been AFK for: " + AFKPly.afk, Color.Red);
-            TShock.Players[args.Player.Index].SendMessage("You have been AFKkick for: " + AFKPly.afkkick, Color.Red);
+            TShock.Players[args.Player.Index].SendErrorMessage("You have been AFK for: " + AFKPly.afk);
+            TShock.Players[args.Player.Index].SendErrorMessage("You have been AFKkick for: " + AFKPly.afkkick);
         }
 
         private void sendafk(CommandArgs args)
@@ -286,7 +286,7 @@ namespace AFK
 
             if (AFKPly.afkspam > 0)
             {
-                args.Player.SendMessage("You just used AFK a few moments ago. Please wait to use it again", Color.Red);
+                args.Player.SendErrorMessage("You just used AFK a few moments ago. Please wait to use it again");
                 return;
             }
 
@@ -309,13 +309,13 @@ namespace AFK
                 AFKPly.afk = 0;
                 if (args.Player.Teleport((int)warp.Position.X * 16, (int)warp.Position.Y * 16))
                 {
-                    args.Player.SendMessage("You have been warped to the AFK zone. Use the /return command to go back!", Color.Red);
+                    args.Player.SendErrorMessage("You have been warped to the AFK zone. Use the /return command to go back!");
                     TShock.Utils.Broadcast(args.Player.Name + " is away from his/her keyboard and has been warped to the AFK zone!", Color.Yellow);
                     AFKPly.afkspam = AFKConfig.afkspam;
                 }
             }
             else
-                args.Player.SendMessage("You are already in the AFK zone no need to use /afk", Color.Red);
+                args.Player.SendErrorMessage("You are already in the AFK zone. No need to use /afk");
         }
 
         private void sendback(CommandArgs args)
@@ -325,43 +325,43 @@ namespace AFK
             {
                 if (args.Player.Teleport(AFKPly.backtileX * 16, AFKPly.backtileY * 16))
                 {
-                    args.Player.SendMessage("You have been warped back to where you were", Color.Green);
+                    args.Player.SendSuccessMessage("You have been warped back to where you were!");
                     TShock.Utils.Broadcast(args.Player.Name + " is back from AFK! YAY!!!", Color.Yellow);
                     AFKPly.backtileX = 0;
                     AFKPly.backtileY = 0;
                 }
             }
             else
-                args.Player.SendMessage("Unable to send you back from AFK", Color.Red);
+                args.Player.SendErrorMessage("Unable to send you back from AFK.");
         }
 
         private static void setwarptime(CommandArgs args)
         {
             if (args.Parameters.Count < 1)
             {
-                args.Player.SendMessage("Invalid syntax! Proper syntax: /afkwarptime <time>", Color.Red);
+                args.Player.SendErrorMessage("Invalid syntax! Proper syntax: /afkwarptime <time>");
                 return;
             }
             AFKConfig.afkwarptime = int.Parse(args.Parameters[0]);
-            args.Player.SendMessage("AFK warp time set to: " + AFKConfig.afkwarptime, Color.Yellow);
+            args.Player.SendWarningMessage("AFK warp time set to: " + AFKConfig.afkwarptime);
         }
 
         private static void setkicktime(CommandArgs args)
         {
             if (args.Parameters.Count < 1)
             {
-                args.Player.SendMessage("Invalid syntax! Proper syntax: /afkkicktime <time>", Color.Red);
+                args.Player.SendErrorMessage("Invalid syntax! Proper syntax: /afkkicktime <time>");
                 return;
             }
             AFKConfig.afkwarptime = int.Parse(args.Parameters[0]);
-            args.Player.SendMessage("AFK kick time set to: " + AFKConfig.afkkicktime, Color.Yellow);
+            args.Player.SendWarningMessage("AFK kick time set to: " + AFKConfig.afkkicktime);
         }
 
         private void AFKreload(CommandArgs args)
         {
             SetupConfig();
             TShock.Log.ConsoleInfo("AFK Reload Initiated");
-            args.Player.SendMessage("AFK Reload Initiated", Color.Green);
+            args.Player.SendSuccessMessage("AFk Reload Initiated");
         }
 
         public static List<Group> FindGroup(string grp)
