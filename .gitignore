@@ -180,3 +180,6 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+AFK/bin/Release/AFK.pdb
+AFK/bin/Release/TerrariaServer.exe
+AFK/obj/Release/AFK.pdb
