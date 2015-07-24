@@ -12,7 +12,7 @@ using System.ComponentModel;
 
 namespace AFK
 {
-    [ApiVersion(1, 19)]
+    [ApiVersion(1, 20)]
     public class AFK : TerrariaPlugin
     {
         public static AFKConfigFile AFKConfig { get; set; }
