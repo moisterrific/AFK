@@ -12,7 +12,7 @@ using System.ComponentModel;
 
 namespace AFK
 {
-    [ApiVersion(1, 20)]
+    [ApiVersion(1, 21)]
     public class AFK : TerrariaPlugin
     {
         public static AFKConfigFile AFKConfig { get; set; }
@@ -184,6 +184,11 @@ namespace AFK
 
                                         if (player.afk > AFKConfig.afkwarptime)
                                         {
+                                            if (!player.TSPlayer.IsLoggedIn)
+                                            {
+                                                TShock.Utils.Kick(player.TSPlayer, "for being AFK.", true, false, "Server");
+                                                return;
+                                            }
                                             player.backtileX = player.TSPlayer.TileX;
                                             player.backtileY = player.TSPlayer.TileY;
                                             player.afk = 0;
