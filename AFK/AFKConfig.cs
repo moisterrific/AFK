@@ -11,6 +11,8 @@ namespace AFK
         public int afkwarptime = 300;
         public int afkkicktime = 700;
         public int afkspam = 20;
+        public string awayMessage = "{player} is away from his/her keyboard and has been warped To The AFK Zone!";
+        public string returnMessage = "{player} is back from AFK! YAY!!!";
 
         public static AFKConfigFile Read(string path)
         {

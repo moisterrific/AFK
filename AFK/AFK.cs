@@ -207,7 +207,7 @@ namespace AFK
                                             if (player.TSPlayer.Teleport((int)afkwarp.Position.X * 16, (int)(afkwarp.Position.Y) * 16))
                                             {
                                                 player.TSPlayer.SendErrorMessage("You have been warped to the AFK zone. Use the /return command to go back!");
-                                                TShock.Utils.Broadcast(player.TSPlayer.Name + " is away from his/her keyboard and has been warped To The AFK Zone!", Color.Yellow);
+                                                TShock.Utils.Broadcast(AFKConfig.awayMessage.Replace("{player}", player.TSPlayer.Name), Color.Yellow);
                                             }
                                         }
                                     }
@@ -221,7 +221,7 @@ namespace AFK
                                                 if (player.TSPlayer.Teleport(player.backtileX * 16, player.backtileY * 16))
                                                 {
                                                     player.TSPlayer.SendSuccessMessage("You have been warped back to where you were");
-                                                    TShock.Utils.Broadcast(player.TSPlayer.Name + " is back from AFK! YAY!!!", Color.Yellow);
+                                                    TShock.Utils.Broadcast(AFKConfig.returnMessage.Replace("{player}", player.TSPlayer.Name), Color.Yellow);
                                                     player.backtileX = 0;
                                                     player.backtileY = 0;
                                                 }
@@ -266,7 +266,7 @@ namespace AFK
                         if (AFKPly.TSPlayer.Teleport(AFKPly.backtileX * 16, AFKPly.backtileY * 16))
                         {
                             AFKPly.TSPlayer.SendSuccessMessage("You have been warped back to where you were!");
-                            TShock.Utils.Broadcast(AFKPly.TSPlayer.Name + " is back from AFK! YAY!!!", Color.Yellow);
+                            TShock.Utils.Broadcast(AFKConfig.returnMessage.Replace("{player}", AFKPly.TSPlayer.Name), Color.Yellow);
                             AFKPly.backtileX = 0;
                             AFKPly.backtileY = 0;
                         }
@@ -315,7 +315,7 @@ namespace AFK
                 if (args.Player.Teleport((int)warp.Position.X * 16, (int)warp.Position.Y * 16))
                 {
                     args.Player.SendErrorMessage("You have been warped to the AFK zone. Use the /return command to go back!");
-                    TShock.Utils.Broadcast(args.Player.Name + " is away from his/her keyboard and has been warped to the AFK zone!", Color.Yellow);
+                    TShock.Utils.Broadcast(AFKConfig.awayMessage.Replace("{player}", args.Player.Name), Color.Yellow);
                     AFKPly.afkspam = AFKConfig.afkspam;
                 }
             }
@@ -331,7 +331,7 @@ namespace AFK
                 if (args.Player.Teleport(AFKPly.backtileX * 16, AFKPly.backtileY * 16))
                 {
                     args.Player.SendSuccessMessage("You have been warped back to where you were!");
-                    TShock.Utils.Broadcast(args.Player.Name + " is back from AFK! YAY!!!", Color.Yellow);
+                    TShock.Utils.Broadcast(AFKConfig.returnMessage.Replace("{player}", args.Player.Name), Color.Yellow);
                     AFKPly.backtileX = 0;
                     AFKPly.backtileY = 0;
                 }
