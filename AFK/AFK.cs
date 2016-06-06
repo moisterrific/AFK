@@ -1,18 +1,15 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using Terraria;
 using TerrariaApi.Server;
 using TShockAPI;
-using TShockAPI.DB;
-using System.ComponentModel;
 
 namespace AFK
 {
-    [ApiVersion(1, 22)]
+	[ApiVersion(1, 23)]
     public class AFK : TerrariaPlugin
     {
         public static AFKConfigFile AFKConfig { get; set; }
@@ -150,7 +147,7 @@ namespace AFK
                             {
                                 string currentregionlist = "";
                                 var currentregion = TShock.Regions.InAreaRegionName(player.TSPlayer.TileX, player.TSPlayer.TileY);
-                                if (currentregion.Count > 0)
+                                if (currentregion.Count() > 0)
                                     currentregionlist = string.Join(",", currentregion.ToArray());
                                 var afkwarp = TShock.Warps.Find("afk");
 
@@ -305,7 +302,7 @@ namespace AFK
 
             string currentregionlist = "";
             var currentregion = TShock.Regions.InAreaRegionName(AFKPly.TSPlayer.TileX, AFKPly.TSPlayer.TileY);
-            if (currentregion.Count > 0)
+            if (currentregion.Count() > 0)
                 currentregionlist = string.Join(",", currentregion.ToArray());
             if (!currentregionlist.Contains("afk"))
             {
