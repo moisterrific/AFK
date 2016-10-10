@@ -9,7 +9,7 @@ using TShockAPI;
 
 namespace AFK
 {
-	[ApiVersion(1, 23)]
+	[ApiVersion(1, 25)]
     public class AFK : TerrariaPlugin
     {
         public static AFKConfigFile AFKConfig { get; set; }

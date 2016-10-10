@@ -1,8 +1,5 @@
 C:\Users\Admin\Documents\GitHub\AFK\AFK\bin\Release\AFK.dll
 C:\Users\Admin\Documents\GitHub\AFK\AFK\bin\Release\AFK.pdb
-C:\Users\Admin\Documents\GitHub\AFK\AFK\bin\Release\Newtonsoft.Json.dll
-C:\Users\Admin\Documents\GitHub\AFK\AFK\bin\Release\TerrariaServer.exe
-C:\Users\Admin\Documents\GitHub\AFK\AFK\bin\Release\TShockAPI.dll
 C:\Users\Admin\Documents\GitHub\AFK\AFK\bin\Release\MySql.Data.dll
 C:\Users\Admin\Documents\GitHub\AFK\AFK\bin\Release\HttpServer.dll
 C:\Users\Admin\Documents\GitHub\AFK\AFK\bin\Release\BCrypt.Net.dll
