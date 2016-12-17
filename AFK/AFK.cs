@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Microsoft.Xna.Framework;
 using System.IO;
 using System.Linq;
 using Terraria;
@@ -9,7 +10,7 @@ using TShockAPI;
 
 namespace AFK
 {
-	[ApiVersion(1, 25)]
+	[ApiVersion(1, 26)]
     public class AFK : TerrariaPlugin
     {
         public static AFKConfigFile AFKConfig { get; set; }
